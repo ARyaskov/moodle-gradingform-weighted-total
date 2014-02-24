@@ -34,6 +34,36 @@ require_once($CFG->dirroot . '/lib/formslib.php');
 class gradingform_weightedtotal_editform extends moodleform {
 
     public function definition() {
+        $form = $this->_form;
+
+        $form->addElement('hidden', 'areaid');
+        $form->setType('areaid', PARAM_INT);
+
+        $form->addElement('hidden', 'returnurl');
+
+        $form->addElement('text', 'name', get_string('name', 'gradingform_weightedtotal'), array('size'=>52));
+        $form->addRule('name', get_string('required'), 'required');
+        $form->setType('name', PARAM_TEXT);
+
+        $options = gradingform_weightedtotal_controller::description_form_field_options($this->_customdata['context']);
+        $form->addElement('editor', 'description_editor', get_string('description', 'gradingform_weightedtotal'), null, $options);
+        $form->setType('description_editor', PARAM_RAW);
+
+        $element = $form->addElement('weightedtotaleditor', 'weightedtotal', get_string('weightedtotal', 'gradingform_weightedtotal'));
+        $form->setType('weightedtotal', PARAM_RAW);
+       // $element->freeze();
+
+        $buttonarray = array();
+        $buttonarray[] = &$form->createElement('submit', 'saveweightedtotal', get_string('saveweightedtotal', 'gradingform_weightedtotal'));
+        if ($this->_customdata['allowdraft']) {
+            $buttonarray[] = &$form->createElement('submit', 'saveweightedtotaldraft', get_string('saveweightedtotaldraft', 'gradingform_weightedtotal'));
+        }
+        $editbutton = &$form->createElement('submit', 'editweightedtotal', ' ');
+        $editbutton->freeze();
+        $buttonarray[] = &$editbutton;
+        $buttonarray[] = &$form->createElement('cancel');
+        $form->addGroup($buttonarray, 'buttonar', '', array(' '), false);
+        $form->closeHeaderBefore('buttonar');
     }
 
     public function definition_after_data() {

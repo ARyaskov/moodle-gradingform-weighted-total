@@ -26,9 +26,9 @@
 
 defined('MOODLE_INTERNAL') || die();
 
-$string['name'] = 'Name';
-$string['required'] = 'Required';
-$string['description'] = 'Description';
-$string['weightedtotal'] = 'Weighted Total';
-$string['saveweightedtotal'] = 'Save';
-$string['saveweightedtotaldraft'] = 'Save as draft';
+$string['name'] = 'Название';
+$string['required'] = 'Обязательно для заполнения';
+$string['description'] = 'Описание';
+$string['weightedtotal'] = 'Взвешенная сумма';
+$string['saveweightedtotal'] = 'Сохранить';
+$string['saveweightedtotaldraft'] = 'Сохранить как черновик';
