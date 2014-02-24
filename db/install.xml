@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<XMLDB PATH="grade/grading/form/weighted_total/db" VERSION="20140115" COMMENT="XMLDB file for Weighted Total Advanced Grading Method"
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+xsi:noNamespaceSchemaLocation="../../../../../lib/xmldb/xmldb.xsd"
+>
+	<TABLES>
+		<TABLE NAME="gradingform_wt_crits" COMMENT="" NEXT="gradingform_wt_fills">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="definitionid"/>
+				<FIELD NAME="definitionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="sortorder"/>
+				<FIELD NAME="sortorder" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="definitionid" NEXT="name"/>
+				<FIELD NAME="name" TYPE="char" LENGTH="127" NOTNULL="false" SEQUENCE="false" PREVIOUS="sortorder" NEXT="weight"/>
+				<FIELD NAME="weight" TYPE="number" LENGTH="10" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" DECIMALS="2" PREVIOUS="name" NEXT="description"/>
+				<FIELD NAME="description" TYPE="text" LENGTH="big" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="weight" NEXT="descriptionformat"/>
+				<FIELD NAME="descriptionformat" TYPE="int" LENGTH="2" NOTNULL="false" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="description" NEXT="graderid"/>
+				<FIELD NAME="graderid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="descriptionformat" NEXT="poasassignmentid" />
+				<FIELD NAME="poasassignmentid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="graderid" />
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_definitionid"/>
+				<KEY NAME="fk_definitionid" TYPE="foreign" FIELDS="definitionid" REFTABLE="grading_definitions" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_graderid"/>
+				<KEY NAME="fk_graderid" TYPE="foreign" FIELDS="graderid" REFTABLE="poasassignment_graders" REFFIELDS="id" PREVIOUS="fk_definitionid" NEXT="poasassignmentid"/>
+				<KEY NAME="fk_poasassignmentid" TYPE="foreign" FIELDS="poasassignmentid" REFTABLE="poasassignment" REFFIELDS="id" PREVIOUS="fk_graderid" />
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="gradingform_wt_fills" COMMENT="" PREVIOUS="gradingform_wt_crits" NEXT="gradingform_wt_graders">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="instanceid"/>
+				<FIELD NAME="instanceid" TYPE="int" LENGTH="10" NOTNULL="false" SEQUENCE="false" COMMENT="" PREVIOUS="id" NEXT="criterionid"/>
+				<FIELD NAME="criterionid" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="false" COMMENT="" PREVIOUS="instanceid" NEXT="score"/>
+				<FIELD NAME="score" TYPE="number" LENGTH="10" NOTNULL="true" SEQUENCE="false" DECIMALS="5" COMMENT="" PREVIOUS="criterionid"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" TYPE="primary" FIELDS="id" NEXT="fk_instanceid"/>
+				<KEY NAME="fk_instanceid" TYPE="foreign" FIELDS="instanceid" REFTABLE="grading_instances" REFFIELDS="id" PREVIOUS="primary" NEXT="fk_criterionid"/>
+				<KEY NAME="fk_criterionid" TYPE="foreign" FIELDS="criterionid" REFTABLE="gradingform_wt_crits" REFFIELDS="id" PREVIOUS="fk_instanceid"/>
+			</KEYS>
+		</TABLE>
+		<TABLE NAME="gradingform_wt_graders" COMMENT="" PREVIOUS="gradingform_wt_fills">
+			<FIELDS>
+				<FIELD NAME="id" TYPE="int" LENGTH="10" NOTNULL="true" UNSIGNED="true" SEQUENCE="true" NEXT="name"/>
+				<FIELD NAME="name" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="id" NEXT="path"/>
+				<FIELD NAME="path" TYPE="char" LENGTH="255" NOTNULL="false" SEQUENCE="false" PREVIOUS="name"/>
+			</FIELDS>
+			<KEYS>
+				<KEY NAME="primary" TYPE="primary" FIELDS="id"/>
+			</KEYS>
+		</TABLE>
+	</TABLES>
+</XMLDB>
