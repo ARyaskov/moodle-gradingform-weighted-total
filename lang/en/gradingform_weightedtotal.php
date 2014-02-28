@@ -32,3 +32,4 @@ $string['description'] = 'Description';
 $string['weightedtotal'] = 'Weighted Total';
 $string['saveweightedtotal'] = 'Save';
 $string['saveweightedtotaldraft'] = 'Save as draft';
+$string['defineweightedtotal'] = 'Define weighted total';

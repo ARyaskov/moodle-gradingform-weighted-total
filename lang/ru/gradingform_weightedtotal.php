@@ -32,3 +32,4 @@ $string['description'] = 'Описание';
 $string['weightedtotal'] = 'Взвешенная сумма';
 $string['saveweightedtotal'] = 'Сохранить';
 $string['saveweightedtotaldraft'] = 'Сохранить как черновик';
+$string['defineweightedtotal'] = 'Определить метод оценивания "Взвешенная сумма"';
