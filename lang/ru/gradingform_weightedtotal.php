@@ -26,6 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['pluginname'] = 'WeightedTotal';
 $string['name'] = 'Название';
 $string['required'] = 'Обязательно для заполнения';
 $string['description'] = 'Описание';
@@ -33,3 +34,5 @@ $string['weightedtotal'] = 'Взвешенная сумма';
 $string['saveweightedtotal'] = 'Сохранить';
 $string['saveweightedtotaldraft'] = 'Сохранить как черновик';
 $string['defineweightedtotal'] = 'Определить метод оценивания "Взвешенная сумма"';
+$string['previewweightedtotal'] = 'Предпросмотр weighted total';
+$string['gradingof'] = '{$a}::Критерии оценивания';

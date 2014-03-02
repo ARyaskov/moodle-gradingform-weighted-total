@@ -26,6 +26,7 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+$string['pluginname'] = 'WeightedTotal';
 $string['name'] = 'Name';
 $string['required'] = 'Required';
 $string['description'] = 'Description';
@@ -33,3 +34,5 @@ $string['weightedtotal'] = 'Weighted Total';
 $string['saveweightedtotal'] = 'Save';
 $string['saveweightedtotaldraft'] = 'Save as draft';
 $string['defineweightedtotal'] = 'Define weighted total';
+$string['previewweightedtotal'] = 'Preview weighted total';
+$string['gradingof'] = '{$a} grading';
