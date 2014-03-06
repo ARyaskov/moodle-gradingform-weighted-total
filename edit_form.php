@@ -34,6 +34,7 @@ require_once($CFG->dirroot . '/lib/formslib.php');
 class gradingform_weightedtotal_editform extends moodleform {
 
     public function definition() {
+        global $DB;
         $form = $this->_form;
 
         $form->addElement('hidden', 'areaid');
@@ -49,9 +50,48 @@ class gradingform_weightedtotal_editform extends moodleform {
         $form->addElement('editor', 'description_editor', get_string('description', 'gradingform_weightedtotal'), null, $options);
         $form->setType('description_editor', PARAM_RAW);
 
-        $element = $form->addElement('weightedtotaleditor', 'weightedtotal', get_string('weightedtotal', 'gradingform_weightedtotal'));
-        $form->setType('weightedtotal', PARAM_RAW);
-       // $element->freeze();
+        $repeatarray = array();
+        $repeatarray[] = $form->createElement('header', 'criterionheader');
+        $repeatarray[] = $form->createElement('text', 'name', get_string('criterionname','gradingform_weightedtotal'),array('size'=>45));
+        $repeatarray[] = $form->createElement('textarea', 'description', get_string('criteriondescription','gradingform_weightedtotal'));
+        $repeatarray[] = $form->createElement('text', 'weight', get_string('criterionweight','gradingform_weightedtotal'));
+        $sources[0] = 'manually';
+
+        $usedgraders = $DB->get_records('gradingform_wt_crits');
+        foreach($usedgraders as $usedgraderrecord) {
+            $grader = $DB->get_record('gradingform_wt_graders',array('id' => $usedgraderrecord->graderid));
+            $gradername = $grader->name;
+            require_once($grader->path);
+            $sources[$usedgraderrecord->graderid] = $gradername::name();
+
+            $form->addElement('hidden', 'grader' . (count($sources) - 1), $usedgraderrecord->graderid);
+            $form->setType('grader' . (count($sources) - 1), PARAM_INT);
+        }
+        $repeatarray[] = $form->createElement('select', 'source', get_string('criterionsource','gradingform_weightedtotal'),$sources);
+        $repeatarray[] = $form->createElement('checkbox', 'delete', get_string('deletecriterion', 'gradingform_weightedtotal'));
+        $repeatarray[] = $form->createElement('hidden', 'criterionid', -1);
+
+        $repeatno = 1;
+
+        $repeateloptions = array();
+
+        $repeateloptions['name']['helpbutton'] = array('criterionname', 'gradingform_weightedtotal');
+        $repeateloptions['description']['helpbutton'] = array('criteriondescription', 'gradingform_weightedtotal');
+        $repeateloptions['weight']['helpbutton'] = array('criterionweight', 'gradingform_weightedtotal');
+        $repeateloptions['source']['helpbutton'] = array('criterionsource', 'gradingform_weightedtotal');
+
+        $repeateloptions['delete']['default'] = 0;
+        $repeateloptions['delete']['disabledif'] = array('criterionid', 'eq', -1);
+
+        $form->setType('criterionid', PARAM_INT);
+
+        $this->repeat_elements($repeatarray, $repeatno, $repeateloptions, 'option_repeats', 'option_add_fields', 1);
+
+        //$mform->addElement('hidden', 'id', $instance['id']);
+        //$mform->setType('id', PARAM_INT);
+
+        $form->addElement('hidden', 'page', 'criterions');
+        $form->setType('page', PARAM_TEXT);
 
         $buttonarray = array();
         $buttonarray[] = &$form->createElement('submit', 'saveweightedtotal', get_string('saveweightedtotal', 'gradingform_weightedtotal'));
@@ -67,24 +107,46 @@ class gradingform_weightedtotal_editform extends moodleform {
     }
 
     public function definition_after_data() {
-
+        $form = $this->_form;
+        $el = $form->getElement('status');
+        if (!$el->getValue()) {
+            $form->removeElement('status');
+        } else {
+            $vals = array_values($el->getValue());
+            if ($vals[0] == gradingform_controller::DEFINITION_STATUS_READY) {
+                $this->findButton('saveweightedtotal')->setValue(get_string('save', 'gradingform_weightedtotal'));
+            }
+        }
     }
 
     public function validation($data, $files) {
-        $err = null;
+        $err = array();
         return $err;
     }
 
     public function get_data() {
-        $data = null;
+        $data = parent::get_data();
+        if (!empty($data->weightedtotal)) {
+            $data->status = gradingform_controller::DEFINITION_STATUS_READY;
+        } else if (!empty($data->saveweightedtotaldraft)) {
+            $data->status = gradingform_controller::DEFINITION_STATUS_DRAFT;
+        }
         return $data;
     }
 
     public function need_confirm_regrading($controller) {
-        return true;
+        return false;
     }
 
     protected function &findButton($elementname) {
+        $form = $this->_form;
+        $buttonar =& $form->getElement('buttonar');
+        $elements =& $buttonar->getElements();
+        foreach ($elements as $el) {
+            if ($el->getName() == $elementname) {
+                return $el;
+            }
+        }
         return null;
     }
 }

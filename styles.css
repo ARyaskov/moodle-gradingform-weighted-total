@@ -1,0 +1,93 @@
+.gradingform_weightedtotal {overflow:auto;padding-bottom:1.25em;max-width:720px;position:relative;}
+
+.gradingform_weightedtotal.editor .group .controls,
+.gradingform_weightedtotal .group .description,
+.gradingform_weightedtotal .group .items,
+.gradingform_weightedtotal.editor .group .additem,
+.gradingform_weightedtotal .group .remark,
+.gradingform_weightedtotal .group .items .item .remark,
+.gradingform_weightedtotal .group .items .item .score,
+.gradingform_weightedtotal .group .items .item .definition,
+.gradingform_weightedtotal .group .items .item {vertical-align: top;}
+
+.gradingform_weightedtotal .group .items .item .definition {width: 50%;}
+.gradingform_weightedtotal .group .items .item .score {width: 15%;}
+.gradingform_weightedtotal .group .items .item .remark {width: 25%;}
+
+.gradingform_weightedtotal.editor .group .controls,
+.gradingform_weightedtotal .group .description,
+.gradingform_weightedtotal.editor .group .additem,
+.gradingform_weightedtotal .group .remark,
+.gradingform_weightedtotal .group .items .item,
+.gradingform_weightedtotal .group .pointstotals {padding:3px;}
+
+.gradingform_weightedtotal .controls,
+.gradingform_weightedtotal .controls div,
+.gradingform_weightedtotal .group .description,
+.gradingform_weightedtotal .group .items .item .definition,
+.gradingform_weightedtotal .group .items .item .score,
+.gradingform_weightedtotal .group .items .item .delete,
+.gradingform_weightedtotal .group .items .item .remark,
+.gradingform_weightedtotal .group .items .item .checkbox,
+.gradingform_weightedtotal .group .items .item .plainvalue {display: inline-block;}
+
+.mform .gradingform_weightedtotal .group > .remark textarea {width: 99%;}
+
+.gradingform_weightedtotal .group .items .item .definition,
+.gradingform_weightedtotal .group .items .item .score,
+.gradingform_weightedtotal .group .items .item .delete,
+.gradingform_weightedtotal .group .items .item .remark,
+.gradingform_weightedtotal .group .items .item .checkbox,
+.gradingform_weightedtotal .group .items .item .plainvalue {padding-left: 3px;}
+
+.gradingform_weightedtotal_editform .status {font-weight:normal;text-transform:uppercase;font-size:60%;padding:0.25em;border:1px solid #EEE;}
+.gradingform_weightedtotal_editform .status.ready {background-color:#e7f1c3;border-color:#AAEEAA;}
+.gradingform_weightedtotal_editform .status.draft {background-color:#f3f2aa;border-color:#EEEE22;}
+
+.gradingform_weightedtotal .group .description {width:150px; font-weight:bold;}
+
+.gradingform_weightedtotal .weightedtotalfeedback,
+.gradingform_weightedtotal .pointstotals {font-weight: bold;}
+
+/* evaluation */
+.gradingform_weightedtotal .group .items .item.currentchecked {background:#fff0f0;}
+.gradingform_weightedtotal .group .items .item.checked {background:#d0ffd0;border:1px solid #555;}
+.gradingform_weightedtotal.evaluate .group .items .item:hover {background:#30ff30;}
+
+/* Make invisible the buttons 'Move up' for the first group and 'Move down' for the last, because those buttons will make no change */
+.gradingform_weightedtotal.editor .group.first .controls .moveup input,
+.gradingform_weightedtotal.editor .group.last .controls .movedown input {display:none;}
+
+/* replace buttons with images */
+.gradingform_weightedtotal.editor .delete input,
+.gradingform_weightedtotal.editor .moveup input,
+.gradingform_weightedtotal.editor .movedown input{text-indent: -1000em;cursor:pointer;border:none;}
+.gradingform_weightedtotal.editor .group .controls .delete input {width:20px;height:16px;background: transparent url([[pix:i/cross_red_big]]) no-repeat center top;}
+.gradingform_weightedtotal.editor .items .item .delete input {width:20px;height:16px;background: transparent url([[pix:i/cross_red_small]]) no-repeat center top;}
+.gradingform_weightedtotal.editor .moveup input {width:20px;height:15px;background: transparent url([[pix:t/up]]) no-repeat center top;margin-top:4px;}
+.gradingform_weightedtotal.editor .movedown input {width:20px;height:15px;background: transparent url([[pix:t/down]]) no-repeat center top;margin-top:4px;}
+
+.gradingform_weightedtotal.editor .addgroup input,
+.gradingform_weightedtotal.editor .additem input {background: transparent url([[pix:t/addgreen]]) no-repeat;display:block;color:#555555;font-weight:bold;text-decoration:none;}
+.gradingform_weightedtotal.editor .addgroup input {background-position: 5px 8px;height:30px;line-height:29px;margin-bottom:14px;padding-left:20px;padding-right:10px;}
+.gradingform_weightedtotal.editor .additem input {background-position: 5px 6px;height:25px;line-height:24px;margin-bottom:10px;padding-left:18px;padding-right:8px;}
+
+.gradingform_weightedtotal .options .optionsheading {font-weight:bold;font-size:1.1em;padding-bottom:5px;}
+.gradingform_weightedtotal .options .option {padding-bottom:2px;}
+.gradingform_weightedtotal .options .option label {margin-left: 5px;}
+.gradingform_weightedtotal .options .option .value {margin-left: 5px;font-weight:bold;}
+
+.gradingform_weightedtotal .group .items.error { border:1px solid red;}
+.gradingform_weightedtotal .group .description.error,
+.gradingform_weightedtotal .group .items .item .definition.error,
+.gradingform_weightedtotal .group .items .item .score.error {background:#FFDDDD;}
+
+.gradingform_weightedtotal-regrade {padding:10px;background:#FFDDDD;border:1px solid #F00;margin-bottom:10px;}
+.gradingform_weightedtotal-restored {padding:10px;background:#FFFFDD;border:1px solid #FF0;margin-bottom:10px;}
+.gradingform_weightedtotal-error {color:red;font-weight:bold;}
+
+/* special classes for elements created by weightedtotaleditor.js */
+.gradingform_weightedtotal .hiddenelement,
+.gradingform_weightedtotal.editor .hiddenelement,
+.gradingform_weightedtotal.editor .group .items .item .plainvalue.hiddenelement {display:none;}
+.gradingform_weightedtotal.editor .pseudotablink {background-color:transparent;border:0 solid;height:1px;width:1px;color:transparent;padding:0;margin:0;position:relative;float:right;}
