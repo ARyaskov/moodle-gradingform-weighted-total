@@ -110,8 +110,10 @@ class gradingform_weightedtotal_renderer extends plugin_renderer_base {
         $critstemplate .= '<th>'.get_string('criterion','gradingform_weightedtotal').'</th>';
         $critstemplate .= '<th>'.get_string('weight','gradingform_weightedtotal').'</th>';
 
-        foreach($values as $value){
-            $critstemplate .= '<tr><td>'.$value['name'].'</td><td>'.$value['weight'].'</td></tr>';
+        if (count($values)){
+            foreach($values as $value){
+                $critstemplate .= '<tr><td>'.$value['name'].'</td><td>'.$value['weight'].'</td></tr>';
+            }
         }
         $critstemplate .= '</table>';
 

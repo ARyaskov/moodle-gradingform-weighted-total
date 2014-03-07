@@ -26,7 +26,13 @@
 
 defined('MOODLE_INTERNAL') || die();
 
+//require_once($CFG->dirroot . '/lib/formslib.php');
+//require_once($CFG->dirroot . '/grade/grading/form/weightedtotal/weightedtotaleditor.php');
+//require_once($CFG->dirroot . '/lib/pear/HTML/QuickForm/input.php');
 require_once($CFG->dirroot . '/lib/formslib.php');
+require_once($CFG->dirroot . '/grade/grading/form/weightedtotal/weightedtotaleditor.php');
+
+MoodleQuickForm::registerElementType('weightedtotaleditor', $CFG->dirroot.'/grade/grading/form/weightedtotal/weightedtotaleditor.php', 'MoodleQuickForm_weightedtotaleditor');
 
 /**
  * Defines the weightedtotal edit form
@@ -49,6 +55,11 @@ class gradingform_weightedtotal_editform extends moodleform {
         $options = gradingform_weightedtotal_controller::description_form_field_options($this->_customdata['context']);
         $form->addElement('editor', 'description_editor', get_string('description', 'gradingform_weightedtotal'), null, $options);
         $form->setType('description_editor', PARAM_RAW);
+
+        $choices = array();
+        $choices[gradingform_controller::DEFINITION_STATUS_DRAFT]    = html_writer::tag('span', get_string('statusdraft', 'core_grading'), array('class' => 'status draft'));
+        $choices[gradingform_controller::DEFINITION_STATUS_READY]    = html_writer::tag('span', get_string('statusready', 'core_grading'), array('class' => 'status ready'));
+        $form->addElement('select', 'status', get_string('weightedtotalstatus', 'gradingform_weightedtotal'), $choices)->freeze();
 
         $repeatarray = array();
         $repeatarray[] = $form->createElement('header', 'criterionheader');
@@ -90,8 +101,8 @@ class gradingform_weightedtotal_editform extends moodleform {
         //$mform->addElement('hidden', 'id', $instance['id']);
         //$mform->setType('id', PARAM_INT);
 
-        $form->addElement('hidden', 'page', 'criterions');
-        $form->setType('page', PARAM_TEXT);
+        //$form->addElement('hidden', 'page', 'criterions');
+        //$form->setType('page', PARAM_TEXT);
 
         $buttonarray = array();
         $buttonarray[] = &$form->createElement('submit', 'saveweightedtotal', get_string('saveweightedtotal', 'gradingform_weightedtotal'));
@@ -109,6 +120,7 @@ class gradingform_weightedtotal_editform extends moodleform {
     public function definition_after_data() {
         $form = $this->_form;
         $el = $form->getElement('status');
+
         if (!$el->getValue()) {
             $form->removeElement('status');
         } else {
