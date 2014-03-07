@@ -68,14 +68,12 @@ class gradingform_weightedtotal_editform extends moodleform {
         $repeatarray[] = $form->createElement('text', 'weight', get_string('criterionweight','gradingform_weightedtotal'));
         $sources[0] = 'manually';
 
-        $usedgraders = $DB->get_records('gradingform_wt_crits');
+        $usedgraders = $DB->get_records('gradingform_wt_graders');
         foreach($usedgraders as $usedgraderrecord) {
-            $grader = $DB->get_record('gradingform_wt_graders',array('id' => $usedgraderrecord->graderid));
-            $gradername = $grader->name;
-            require_once($grader->path);
-            $sources[$usedgraderrecord->graderid] = $gradername::name();
+            require_once($usedgraderrecord->path);
+            $sources[$usedgraderrecord->graderid] = $usedgraderrecord->name;
 
-            $form->addElement('hidden', 'grader' . (count($sources) - 1), $usedgraderrecord->graderid);
+            $form->addElement('hidden', 'grader' . (count($sources) - 1), $usedgraderrecord->id);
             $form->setType('grader' . (count($sources) - 1), PARAM_INT);
         }
         $repeatarray[] = $form->createElement('select', 'source', get_string('criterionsource','gradingform_weightedtotal'),$sources);
