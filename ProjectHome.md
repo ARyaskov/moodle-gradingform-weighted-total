@@ -1,0 +1,1 @@
+Moodle Gradingform Weighted Total Plugin
